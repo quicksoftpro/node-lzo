@@ -1,0 +1,18 @@
+{
+	"name": "quick-lzo",
+	"version": "0.1.0",
+	"description": "This is a wrapper around minilzo fast compression library for node js. This is using version 2.06 of lzo lib.",
+	"author": "Avanish Ojha",
+	"main": "lzo",
+	"scripts": {
+       "install": "node-gyp configure build"
+	},
+	"engines": {
+		"node": ">=0.8.0"
+	},
+	"licenses": [
+		{
+			"type": "MIT"
+		}
+	]
+}
