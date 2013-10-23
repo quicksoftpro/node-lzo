@@ -11,7 +11,7 @@ http://www.oberhumer.com/opensource/lzo/
 
 #include <node_buffer.h>
 
-#include "minilzo.h"
+#include "minilzo206/minilzo.h"
 
 using namespace v8;
 using namespace node;
