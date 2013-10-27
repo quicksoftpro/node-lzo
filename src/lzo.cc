@@ -68,11 +68,11 @@ decompress(const unsigned char *input, unsigned char *output, lzo_uint in_len, l
     }else{
     	if(r == LZO_E_OUTPUT_OVERRUN){
     		printf("\nlzo error: LZO_E_OUTPUT_OVERRUN\n");
-			throw "lzo failed to decompress";
+			throw "lzo failed to decompress : LZO_E_OUTPUT_OVERRUN";
     	}else if(r ==  LZO_E_INPUT_NOT_CONSUMED){
     		printf("\nlzo error: LZO_E_INPUT_NOT_CONSUMED\n");
     		printf("This usually indicates that your compressed data\ndoes not fill the entire buffer you provided.\n\n");
-			throw "lzo failed to decompress";
+			throw "lzo failed to decompress : LZO_E_INPUT_NOT_CONSUMED";
     	}else{
 			printf("\nERROR: lzo failed to decompress: %i\n", r);
 			throw "lzo failed to decompress";
