@@ -28,6 +28,9 @@ VException(const char *msg) {
 
 static HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
 
+
+//COMPRESSION 
+
 int
 compress(const unsigned char *input, unsigned char *output, lzo_uint in_len, lzo_uint& out_len)
 {
@@ -50,6 +53,9 @@ compress(const unsigned char *input, unsigned char *output, lzo_uint in_len, lzo
     }
 }
 
+//DECOMPRESSION
+
+
 int
 decompress(const unsigned char *input, unsigned char *output, lzo_uint in_len, lzo_uint& out_len)
 {
@@ -64,7 +70,8 @@ decompress(const unsigned char *input, unsigned char *output, lzo_uint in_len, l
     r = lzo1x_decompress(input,in_len,output,&out_len,NULL);
 
     if (r == LZO_E_OK){
-    	return 0;
+    	printf ("decompression done ..len= %d\n", out_len);
+    	return out_len;
     }else{
     	if(r == LZO_E_OUTPUT_OVERRUN){
     		printf("\nlzo error: LZO_E_OUTPUT_OVERRUN\n");
@@ -80,6 +87,9 @@ decompress(const unsigned char *input, unsigned char *output, lzo_uint in_len, l
 		return -1;
     }
 }
+
+
+//NODE WRAP COMPRESS
 
 Handle<Value>
 lzo_compress(const Arguments &args)
@@ -138,11 +148,19 @@ lzo_compress(const Arguments &args)
 	}
 }
 
+
+//NODE DECOMPRESS
+
 Handle<Value>
 lzo_decompress(const Arguments &args)
 {
 
 	HandleScope scope;
+
+
+
+	int len = -1;
+
 
     if (args.Length() == 2){
 
@@ -156,12 +174,15 @@ lzo_decompress(const Arguments &args)
 		
 		lzo_uint output_len = Buffer::Length(outputBuffer);//not sure if output_len is read before it is written...
 		
-		decompress(
+	len = 	decompress(
 			(unsigned char *) Buffer::Data(inputBuffer), 
 			(unsigned char *) Buffer::Data(outputBuffer), 
 			Buffer::Length(inputBuffer),
 			output_len
 		);
+		return scope.Close (Integer::New(len));
+
+
 	}else if(args.Length() == 5){
 		if (!Buffer::HasInstance(args[0]))
 		    return VException("Argument 1 should be a buffer");
@@ -176,16 +197,18 @@ lzo_decompress(const Arguments &args)
 		
 		lzo_uint output_len = 0;//not read before written, I guess
 		
-		decompress(
+	 len = 	decompress(
 			((unsigned char *) Buffer::Data(inputBuffer)) + srcOff, 
 			((unsigned char *) Buffer::Data(outputBuffer)) + outOff, 
 			srcLen,
 			output_len
 		);
-	}else{
-        return VException("Two or five arguments should be provided: decompress(compressedBuffer, outputBuffer) or decompress(compressedBuffer, srcOff, srcLen, outputBuffer, outOff)");
-	}    
-    return Undefined();
+
+
+		return scope.Close(Integer::New(len));
+    
+    	}
+    		return scope.Close (Integer::New( -1));
 }
 
 extern "C"{
