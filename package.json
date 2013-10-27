@@ -1,6 +1,6 @@
 {
 	"name": "quick-lzo",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "This is a wrapper around minilzo fast compression library for node js. This is using version 2.06 of lzo lib.",
 	"author": "quicksoftpro",
 	"main": "lzo",
