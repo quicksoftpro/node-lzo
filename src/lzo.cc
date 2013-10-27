@@ -36,7 +36,7 @@ compress(const unsigned char *input, unsigned char *output, lzo_uint in_len, lzo
 
     if (lzo_init() != LZO_E_OK){
     	printf("lzo cannot initialize: this usually indicates a compiler error");
-  //  	throw "lzo cannot initialize: this usually indicates a compiler error";
+    	throw "lzo cannot initialize: this usually indicates a compiler error";
     }
 
 	r = lzo1x_1_compress(input,in_len,output,&out_len,wrkmem);
@@ -45,7 +45,7 @@ compress(const unsigned char *input, unsigned char *output, lzo_uint in_len, lzo
     	return 0;
     }else{
     	printf("lzo failed to compress");
-//    	throw "lzo failed to compress";
+    	throw "lzo failed to compress";
     	return -1;
     }
 }
@@ -57,7 +57,7 @@ decompress(const unsigned char *input, unsigned char *output, lzo_uint in_len, l
 
     if (lzo_init() != LZO_E_OK){
     	printf("lzo cannot initialize: this usually indicates a compiler error");
-    //	throw "lzo cannot initialize: this usually indicates a compiler error";
+    	throw "lzo cannot initialize: this usually indicates a compiler error";
 	return -1;
     }
 
@@ -68,14 +68,14 @@ decompress(const unsigned char *input, unsigned char *output, lzo_uint in_len, l
     }else{
     	if(r == LZO_E_OUTPUT_OVERRUN){
     		printf("\nlzo error: LZO_E_OUTPUT_OVERRUN\n");
-			//throw "lzo failed to decompress";
+			throw "lzo failed to decompress";
     	}else if(r ==  LZO_E_INPUT_NOT_CONSUMED){
     		printf("\nlzo error: LZO_E_INPUT_NOT_CONSUMED\n");
     		printf("This usually indicates that your compressed data\ndoes not fill the entire buffer you provided.\n\n");
-			//throw "lzo failed to decompress";
+			throw "lzo failed to decompress";
     	}else{
 			printf("\nERROR: lzo failed to decompress: %i\n", r);
-			//throw "lzo failed to decompress";
+			throw "lzo failed to decompress";
 		}
 		return -1;
     }

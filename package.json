@@ -1,8 +1,8 @@
 {
 	"name": "quick-lzo",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "This is a wrapper around minilzo fast compression library for node js. This is using version 2.06 of lzo lib.",
-	"author": "Avanish Ojha",
+	"author": "quicksoftpro",
 	"main": "lzo",
 	"scripts": {
        "install": "node-gyp configure build"
