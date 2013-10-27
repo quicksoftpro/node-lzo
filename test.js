@@ -1,6 +1,8 @@
 var qlzo =require("./build/Release/quicklzo");
 
 
+var v = qlzo.version_string() + " " + qlzo.version_date();
+console.log ("running version : " + v);
 var bufferIn = new Buffer("Hello Mr Tester...did you enter more and more text?Hello Mr Tester...did you enter mode and more again");
 
 var bufferOut = new Buffer (bufferIn.length*2);

@@ -70,7 +70,7 @@ decompress(const unsigned char *input, unsigned char *output, lzo_uint in_len, l
     r = lzo1x_decompress(input,in_len,output,&out_len,NULL);
 
     if (r == LZO_E_OK){
-    	printf ("decompression done ..len= %d\n", out_len);
+    //	printf ("decompression done ..len= %d\n", out_len);
     	return out_len;
     }else{
     	if(r == LZO_E_OUTPUT_OVERRUN){
@@ -88,6 +88,23 @@ decompress(const unsigned char *input, unsigned char *output, lzo_uint in_len, l
     }
 }
 
+
+//NODE VERSION WRAP
+
+Handle<Value>
+lzo_version_string(const Arguments &args){
+	HandleScope scope;
+
+	//lzo_version_string()
+	return scope.Close (String::New(lzo_version_string()));
+}
+
+Handle<Value>
+lzo_version_date (const Arguments &args){
+	HandleScope scope;
+	return scope.Close (String::New(lzo_version_date()));
+
+}
 
 //NODE WRAP COMPRESS
 
@@ -211,6 +228,9 @@ lzo_decompress(const Arguments &args)
     		return scope.Close (Integer::New( -1));
 }
 
+
+
+
 extern "C"{
 
 void init (Handle<Object> target)
@@ -218,6 +238,8 @@ void init (Handle<Object> target)
     HandleScope scope;
     target->Set(String::New("compress"), FunctionTemplate::New(lzo_compress)->GetFunction());
     target->Set(String::New("decompress"), FunctionTemplate::New(lzo_decompress)->GetFunction());
+    target->Set(String::New("version_string"), FunctionTemplate::New(lzo_version_string)->GetFunction());
+    target->Set(String::New("version_date"), FunctionTemplate::New(lzo_version_date)->GetFunction());
 }
 	NODE_MODULE (quicklzo, init)	
 }
